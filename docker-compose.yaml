@@ -50,7 +50,7 @@ services:
     build: ./noise-api
     networks:
       - "animal-net"
-networks:
-  animal-net:
 volumes:
   animal-vol:
+networks:
+  animal-net:
