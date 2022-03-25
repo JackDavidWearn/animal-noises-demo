@@ -57,3 +57,4 @@ volumes:
   card-vol:
 networks:
   card-net:
+    driver: overlay
