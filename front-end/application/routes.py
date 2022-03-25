@@ -9,7 +9,7 @@ def index():
     card_suit = requests.get('http://cardsuit-api:5000/get_suit')
     selected_card = requests.post('http://card_api:5000/get_card', json = {"value": card_value.text, "suit": card_suit.text})
     # cards = Cards(card_value = card_value.text, card_suit = card_suit.text)
-    db.session.add(Results(card_value=card_value.json()["value"], card_suit=card_suit.json()["card_suit"]))    
+    db.session.add(Results(card_value=card_value.json()["value"], card_suit=card_suit.json()["suit"]))    
     db.session.commit()
     results = Results.query.all()
     return render_template('index.html', results = results)
