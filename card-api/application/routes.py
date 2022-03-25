@@ -3,13 +3,11 @@ from flask import request, jsonify, Response
 
 @app.route('/get-card', methods=['POST'])
 def card():
-    cards = request.get_json()
-    symbol = cards["value"]
-    suit = cards["suit"]
-    values = {'A':'Ace', '2':'Two', '3':'Three', '4':'Four', '5':'Five', '6':'Six', '7':'Seven', '8':'Eight', '9':'Nine', '10':'Ten', 'J':'Jack','Q':'Queen','K':'King'}
-    value = values[symbol]
-    return jsonify({"value": value, "suit": suit})
-
+    card_data = request.get_json()
+    value = card_data["value"]
+    suit = card_data["suit"]
+    card = f'{value} of {suit}'
+    return card
 
     # card_data = request.get_json()
     # card_value = card_data["Value"]
