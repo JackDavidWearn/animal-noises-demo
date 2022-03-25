@@ -13,7 +13,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: card_db
   front-end:
-    image: jwearn/card-deck-front:latest
+    image: jwearn1999/card-deck-front:latest
     build: ./front-end
     networks:
       - "card-net"
