@@ -2,7 +2,7 @@ version: "3.8"
 services:
   mysql:
     image: jwearn1999/card-deck-db:latest
-    build: ./db
+    build: ./database
     volumes:
       - type: volume
         source: card-vol
