@@ -1,41 +1,48 @@
-version: '3.8'
+version: "3.8"
 services:
-  frontend:
-    container_name: flask-app
-    image: jwearn1999/flask-app:latest
+  front-end:
+    image: jwearn1999/card-front-end:latest
     build: ./front-end
+    networks:
+      - "card-net"
+    depends_on:
+      - "mysql"
+      - "cardvalue-api"
+      - "cardsuit-api"
+      - "card-api"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+  cardvalue-api:
+    image: jwearn1999/card-cardvalue-api:latest
+    build: ./cardvalue-api
+    networks:
+      - "card-net"
+  cardsuit-api:
+    image: jwearn1999/card-cardsuit-api:latest
+    build: ./cardsuit-api
+    networks:
+      - "card-net"
+  card-api:
+    image: jwearn1999/card-card-api:latest
+    build: ./card-api
+    networks:
+      - "card-net"
+  nginx:
+    image: nginx:latest
     ports:
       - published: 80
-        target: 5000
-    deploy:
-      replicas: 2
-
-  service2-symbol-gen:
-    container_name: symbol
-    image: jwearn1999/symbol:latest
-    build: ./cardvalue-api
-    ports:
-      - published: 5001
-        target: 5000
-    deploy:
-      replicas: 2
-
-  service3-suit-gen:
-    container_name: suit
-    image: jwearn1999/suit:latest
-    build: ./cardsuit-api
-    ports:
-      - published: 5002
-        target: 5000
-    deploy:
-      replicas: 2
-
-  backend:
-    container_name: card
-    image: jwearn1999/card:latest
-    build: ./card-api
-    ports:
-      - published: 5003
-        target: 5000 
-    deploy:
-      replicas: 2  
+        target: 80
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: ./nginx.conf
+        target: nginx.conf
+    networks:
+      - "card-net"
+    depends_on:
+      - "front-end"
+volumes:
+  card-vol:
+networks:
+  card-net:
+    driver: overlay
