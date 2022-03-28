@@ -39,3 +39,14 @@ services:
         target: 5000 
     deploy:
       replicas: 2
+  
+  nginx:
+    image: nginx:latest
+    ports:
+      - published: 80
+        target: 80
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: ./nginx.conf
+        target: nginx.conf
