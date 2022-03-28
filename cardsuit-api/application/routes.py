@@ -1,5 +1,5 @@
 from application import app
-from flask import jsonify
+from flask import Response
 from random import choice
 
 # Declaring the 4 card deck suits
@@ -9,4 +9,4 @@ suits = ['Clubs', 'Diamonds', 'Hearts', 'Spades']
 @app.route('/get-suit', methods=['GET'])
 def get_suit():
     suit = choice(suits)
-    return jsonify(suit=suit)
+    return Response(suit)
