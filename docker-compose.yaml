@@ -39,3 +39,17 @@ services:
         target: 5000 
     deploy:
       replicas: 2
+  
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    ports:
+      - published: 80
+        target: 80
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: ./nginx.conf
+        target: /etc/nginx.conf
+    depends_on:
+      - "frontend"
